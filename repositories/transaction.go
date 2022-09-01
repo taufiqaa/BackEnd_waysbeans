@@ -26,21 +26,21 @@ func RepositoryTransaction(db *gorm.DB) *repository {
 
 func (r *repository) FindTransactions() ([]models.Transaction, error) {
 	var transactions []models.Transaction
-	err := r.db.Preload("Carts.Product").Preload("Carts.Topping").Preload("User").Find(&transactions).Error
+	err := r.db.Preload("Carts.Product").Preload("User").Find(&transactions).Error
 
 	return transactions, err
 }
 
 func (r *repository) FindTransactionId(UserID int) ([]models.Transaction, error) {
 	var transactions []models.Transaction
-	err := r.db.Preload("User").Preload("Carts").Preload("Carts.Product").Preload("Carts.Topping").Find(&transactions).Error
+	err := r.db.Preload("User").Preload("Carts").Preload("Carts.Product").Find(&transactions).Error
 
 	return transactions, err
 }
 
 func (r *repository) GetTransaction(ID int) (models.Transaction, error) {
 	var transaction models.Transaction
-	err := r.db.Preload("User").Preload("Carts").Preload("Carts.Product").Preload("Carts.Topping").Find(&transaction, ID).Error
+	err := r.db.Preload("User").Preload("Carts").Preload("Carts.Product").Find(&transaction, ID).Error
 
 	return transaction, err
 }
@@ -81,14 +81,14 @@ func (r *repository) DeleteTransaction(transaction models.Transaction) (models.T
 
 func (r *repository) GetUserTransaction(UserID int) ([]models.Transaction, error) {
 	var user []models.Transaction
-	err := r.db.Debug().Preload("User").Preload("Carts").Preload("Carts.Product").Preload("Carts.Topping").Find(&user, "user_id = ?", UserID).Error
+	err := r.db.Debug().Preload("User").Preload("Carts").Preload("Carts.Product").Find(&user, "user_id = ?", UserID).Error
 
 	return user, err
 }
 
 func (r *repository) GetOneTransaction(ID string) (models.Transaction, error) {
 	var transaction models.Transaction
-	err := r.db.Preload("Carts").Preload("Carts.Product").Preload("Carts.Topping").Preload("User").First(&transaction, "id = ?", ID).Error
+	err := r.db.Preload("Carts").Preload("Carts.Product").Preload("User").First(&transaction, "id = ?", ID).Error
 
 	return transaction, err
 }
