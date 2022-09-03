@@ -5,7 +5,7 @@ type Product struct {
 	Title       string `json:"title" form:"title" gorm:"type: varchar(255)"`
 	Price       int    `json:"price" form:"price" gorm:"type: int"`
 	Stock       int    `json:"stock" form:"stock" gorm:"type: int"`
-	Description string `json:"description" form:"description" gorm:"type: varchar(255)"`
+	Description string `json:"description" form:"description" gorm:"type: varchar(1000)"`
 	Image       string `json:"image" form:"image" gorm:"type: varchar(255)"`
 }
 
