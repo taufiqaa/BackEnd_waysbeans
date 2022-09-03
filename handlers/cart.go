@@ -212,6 +212,10 @@ func (h *handlerCart) UpdateQuantity(w http.ResponseWriter, r *http.Request) {
 		cart.Qty = &request.Qty
 	}
 
+	if request.ProductStock > 0 {
+		cart.ProductStock = &request.ProductStock
+	}
+
 	data, err := h.CartRepository.UpdateCart(cart)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)

@@ -20,6 +20,10 @@ type UpdateProductRequest struct {
 	// CategoryID int    `json:"category_id" form:"category_id" gorm:"type: int"`
 }
 
+type UpdateProductStock struct {
+	Stock int `json:"stock" gorm:"type: int"`
+}
+
 type ProductResponse struct {
 	Title       string `json:"title" form:"title"`
 	Price       int    `json:"price" form:"price"`

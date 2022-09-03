@@ -15,8 +15,9 @@ type UpdateCart struct {
 }
 
 type UpdateQuantity struct {
-	Qty       int `json:"qty"`
-	SubAmount int `json:"sub_amount"`
+	Qty          int `json:"qty"`
+	SubAmount    int `json:"sub_amount"`
+	ProductStock int `json:"product_stock"`
 }
 
 type CartResponse struct {

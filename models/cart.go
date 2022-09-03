@@ -14,6 +14,7 @@ type Cart struct {
 	CreatedAt     time.Time            `json:"-"`
 	UpdatedAt     time.Time            `json:"updated_at"`
 	SubAmount     *int                 `json:"sub_amount"`
+	ProductStock  *int                 `json:"product_stock"`
 }
 
 type CartResponse struct {
@@ -23,6 +24,7 @@ type CartResponse struct {
 	TransactionID int                 `json:"-"`
 	Transaction   TransactionResponse `json:"transaction" gorm:"foreignKey:TransactionID"`
 	SubAmount     int                 `json:"sub_amount"`
+	Qty           int                 `json:"qty"`
 }
 
 func (CartResponse) TableName() string {
