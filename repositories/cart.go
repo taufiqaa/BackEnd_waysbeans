@@ -48,6 +48,12 @@ func (r *repository) UpdateCartTransaction(cart models.Cart) (models.Cart, error
 	return cart, err
 }
 
+// func (r *repository) UpdateQuantity(cart models.Cart) (models.Cart, error) {
+// 	err := r.db.Save(&cart).Error
+
+// 	return cart, err
+// }
+
 func (r *repository) UpdateCart(cart models.Cart) (models.Cart, error) {
 	err := r.db.Save(&cart).Error
 
@@ -61,10 +67,10 @@ func (r *repository) DeleteCart(cart models.Cart) (models.Cart, error) {
 }
 
 func (r *repository) FindCartId(UserID int) ([]models.Cart, error) {
-	var carts []models.Cart
-	err := r.db.Preload("Product").Find(&carts, "user_id = ?", UserID).Error
+	var cart []models.Cart
+	err := r.db.Preload("Product").Find(&cart, "user_id = ?", UserID).Find(&cart, "transaction_id IS NULL").Error
 
-	return carts, err
+	return cart, err
 }
 
 // func (r *repository) FindCartsByID(userID int) ([]models.Cart, error) {

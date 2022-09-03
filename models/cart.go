@@ -10,10 +10,10 @@ type Cart struct {
 	User          UsersProfileResponse `json:"user"`
 	TransactionID *int                 `json:"transaction_id"`
 	Transaction   TransactionResponse  `json:"transaction"`
-	Qty           int                  `json:"qty"`
+	Qty           *int                 `json:"qty" gorm:"default:1"`
 	CreatedAt     time.Time            `json:"-"`
 	UpdatedAt     time.Time            `json:"updated_at"`
-	SubAmount     int                  `json:"sub_amount" gorm:"type:int"`
+	SubAmount     *int                 `json:"sub_amount"`
 }
 
 type CartResponse struct {

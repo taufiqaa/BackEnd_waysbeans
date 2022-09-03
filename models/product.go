@@ -7,7 +7,6 @@ type Product struct {
 	Stock       int    `json:"stock" form:"stock" gorm:"type: int"`
 	Description string `json:"description" form:"description" gorm:"type: varchar(255)"`
 	Image       string `json:"image" form:"image" gorm:"type: varchar(255)"`
-	Qty         int    `json:"-" form:"qty"`
 }
 
 type ProductResponse struct {
@@ -26,7 +25,6 @@ type ProductUserResponse struct {
 	Stock       int    `json:"stock"`
 	Description string `json:"description"`
 	Image       string `json:"image"`
-	Qty         int    `json:"qty"`
 }
 
 func (ProductResponse) TableName() string {
