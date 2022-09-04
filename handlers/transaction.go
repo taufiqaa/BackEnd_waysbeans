@@ -4,10 +4,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
-	"math/rand"
 	"net/http"
 	"os"
 	"strconv"
+	"time"
 	dto "waysbeans/dto/result"
 	transactiondto "waysbeans/dto/transaction"
 	"waysbeans/models"
@@ -103,10 +103,11 @@ func (h *handlerTransaction) CreateTransaction(w http.ResponseWriter, r *http.Re
 		return
 	}
 
+	timeMilli := time.Now()
 	var TransIdIsMatch = false
 	var TransactionId int
 	for !TransIdIsMatch {
-		TransactionId = userId + rand.Intn(100000) - rand.Intn(1000)
+		TransactionId = int(timeMilli.Unix())
 		transactionData, _ := h.TransactionRepository.GetTransaction(TransactionId)
 		if transactionData.ID == 0 {
 			TransIdIsMatch = true

@@ -13,7 +13,7 @@ type ProductResponse struct {
 	ID          int    `json:"id"`
 	Title       string `json:"title"`
 	Price       int    `json:"price"`
-	Stock       int    `json:"stock"`
+	Stock       int    `json:"stock" gorm:"type:int"`
 	Description string `json:"description"`
 	Image       string `json:"image"`
 }
