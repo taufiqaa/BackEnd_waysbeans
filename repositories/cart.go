@@ -7,26 +7,16 @@ import (
 )
 
 type CartRepository interface {
-	FindCarts() ([]models.Cart, error) //ok
 	GetCart(ID int) (models.Cart, error)
-	CreateCart(cart models.Cart) (models.Cart, error) //use
+	CreateCart(cart models.Cart) (models.Cart, error)
 	UpdateCart(cart models.Cart) (models.Cart, error)
-	FindCartId(CartId int) ([]models.Cart, error)           //use
-	UpdateCartTransaction(models.Cart) (models.Cart, error) //use
+	FindCartId(CartId int) ([]models.Cart, error)
+	UpdateCartTransaction(models.Cart) (models.Cart, error)
 	DeleteCart(cart models.Cart) (models.Cart, error)
-	// FindCartsByID(userID int) ([]models.Cart, error)          //ok
-	// FindCartsTransaction(TransactionID int)
 }
 
 func RepositoryCart(db *gorm.DB) *repository {
 	return &repository{db}
-}
-
-func (r *repository) FindCarts() ([]models.Cart, error) {
-	var carts []models.Cart
-	err := r.db.Preload("Product").Find(&carts).Error
-
-	return carts, err
 }
 
 func (r *repository) GetCart(ID int) (models.Cart, error) {
@@ -48,12 +38,6 @@ func (r *repository) UpdateCartTransaction(cart models.Cart) (models.Cart, error
 	return cart, err
 }
 
-// func (r *repository) UpdateQuantity(cart models.Cart) (models.Cart, error) {
-// 	err := r.db.Save(&cart).Error
-
-// 	return cart, err
-// }
-
 func (r *repository) UpdateCart(cart models.Cart) (models.Cart, error) {
 	err := r.db.Save(&cart).Error
 
@@ -72,10 +56,3 @@ func (r *repository) FindCartId(UserID int) ([]models.Cart, error) {
 
 	return cart, err
 }
-
-// func (r *repository) FindCartsByID(userID int) ([]models.Cart, error) {
-// 	var carts []models.Cart
-// 	err := r.db.Preload("Product").Preload("Topping").Find(&carts, "user_id = ?", userID).Error
-
-// 	return carts, err
-// }

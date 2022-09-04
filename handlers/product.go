@@ -230,14 +230,3 @@ func (h *handlerProduct) DeleteProduct(w http.ResponseWriter, r *http.Request) {
 	response := dto.SuccessResult{Status: "success", Data: data}
 	json.NewEncoder(w).Encode(response)
 }
-
-// func convertResponseProduct(u models.Product) models.ProductResponse {
-// 	return models.ProductResponse{
-// 		ID:          u.ID,
-// 		Title:       u.Title,
-// 		Price:       u.Price,
-// 		Image:       u.Image,
-// 		Stock:       u.Stock,
-// 		Description: u.Description,
-// 	}
-// }

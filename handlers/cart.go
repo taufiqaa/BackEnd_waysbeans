@@ -25,22 +25,6 @@ func HandlerCart(CartRepository repositories.CartRepository) *handlerCart {
 	return &handlerCart{CartRepository}
 }
 
-func (h *handlerCart) FindCarts(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-
-	carts, err := h.CartRepository.FindCarts()
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		response := dto.ErrorResult{Code: http.StatusBadRequest, Message: err.Error()}
-		json.NewEncoder(w).Encode(response)
-		return
-	}
-
-	w.WriteHeader(http.StatusOK)
-	response := dto.SuccessResult{Status: "success", Data: carts}
-	json.NewEncoder(w).Encode(response)
-}
-
 func (h *handlerCart) GetCart(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
@@ -163,11 +147,11 @@ func (h *handlerCart) UpdateCartTransaction(w http.ResponseWriter, r *http.Reque
 	}
 
 	if request.TransactionID > 0 {
-		cart.TransactionID = &request.TransactionID //Test
+		cart.TransactionID = &request.TransactionID
 	}
 
 	if request.UserID < 1 {
-		cart.UserID = 1 //Test
+		cart.UserID = 1
 	}
 
 	data, err := h.CartRepository.UpdateCart(cart)
@@ -253,27 +237,5 @@ func (h *handlerCart) UpdateQuantity(w http.ResponseWriter, r *http.Request) {
 
 // 	w.WriteHeader(http.StatusOK)
 // 	response := dto.SuccessResult{Status: "success", Data: data}
-// 	json.NewEncoder(w).Encode(response)
-// }
-
-// func (h *handlerCart) FindCartsByID(w http.ResponseWriter, r *http.Request) {
-// 	w.Header().Set("Content-Type", "application/json")
-
-// 	userInfo := r.Context().Value("userInfo").(jwt.MapClaims)
-// 	id_user := int(userInfo["id"].(float64))
-
-// 	cart, err := h.CartRepository.FindCartsByID(id_user)
-// 	if err != nil {
-// 		w.WriteHeader(http.StatusInternalServerError)
-// 		response := dto.ErrorResult{Code: http.StatusBadRequest, Message: err.Error()}
-// 		json.NewEncoder(w).Encode(response)
-// 	}
-
-// 	for i, p := range cart {
-// 		cart[i].Product.Image = path_file_cart + p.Product.Image
-// 	}
-
-// 	w.WriteHeader(http.StatusOK)
-// 	response := dto.SuccessResult{Status: "Success", Data: cart}
 // 	json.NewEncoder(w).Encode(response)
 // }

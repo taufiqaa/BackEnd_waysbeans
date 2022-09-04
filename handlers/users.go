@@ -165,8 +165,5 @@ func (h *handler) DeleteUser(w http.ResponseWriter, r *http.Request) {
 func convertResponse(u models.User) usersdto.UserResponse {
 	return usersdto.UserResponse{
 		ID: u.ID,
-		// Name: u.Name,
-		// Email:    u.Email,
-		// Password: u.Password,
 	}
 }

@@ -7,17 +7,12 @@ import (
 )
 
 type TransactionRepository interface {
-	FindTransactions() ([]models.Transaction, error)                              //
-	FindTransactionId(UserID int) ([]models.Transaction, error)                   //use
-	GetTransaction(ID int) (models.Transaction, error)                            //
-	GetOneTransaction(ID string) (models.Transaction, error)                      //
-	CreateTransaction(transaction models.Transaction) (models.Transaction, error) //use
-	UpdateTransaction(transaction models.Transaction) (models.Transaction, error)
-	// DeleteTransaction(transaction models.Transaction) (models.Transaction, error)
-	// GetUserTransaction(ID int) ([]models.Transaction, error) //
-	UpdateTransactionStatus(status string, ID string) error //use
-
-	//GetEmailTransaction
+	FindTransactions() ([]models.Transaction, error)
+	FindTransactionId(UserID int) ([]models.Transaction, error)
+	GetTransaction(ID int) (models.Transaction, error)
+	GetOneTransaction(ID string) (models.Transaction, error)
+	CreateTransaction(transaction models.Transaction) (models.Transaction, error)
+	UpdateTransactionStatus(status string, ID string) error
 }
 
 func RepositoryTransaction(db *gorm.DB) *repository {
@@ -51,12 +46,6 @@ func (r *repository) CreateTransaction(transaction models.Transaction) (models.T
 	return transaction, err
 }
 
-func (r *repository) UpdateTransaction(transaction models.Transaction) (models.Transaction, error) {
-	err := r.db.Save(&transaction).Error
-
-	return transaction, err
-}
-
 func (r *repository) UpdateTransactionStatus(status string, ID string) error {
 	var transaction models.Transaction
 	r.db.Preload("Product").First(&transaction, ID)
@@ -71,19 +60,6 @@ func (r *repository) UpdateTransactionStatus(status string, ID string) error {
 	err := r.db.Save(&transaction).Error
 
 	return err
-}
-
-func (r *repository) DeleteTransaction(transaction models.Transaction) (models.Transaction, error) {
-	err := r.db.Delete(&transaction).Error
-
-	return transaction, err
-}
-
-func (r *repository) GetUserTransaction(UserID int) ([]models.Transaction, error) {
-	var user []models.Transaction
-	err := r.db.Debug().Preload("User").Preload("Carts").Preload("Carts.Product").Find(&user, "user_id = ?", UserID).Error
-
-	return user, err
 }
 
 func (r *repository) GetOneTransaction(ID string) (models.Transaction, error) {

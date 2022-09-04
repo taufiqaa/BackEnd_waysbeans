@@ -11,7 +11,6 @@ type AuthRepository interface {
 	Login(email string) (models.User, error)
 	Getuser(ID int) (models.User, error)
 	CreateProfile(profile models.Profile) (models.Profile, error)
-	CreateDataTransaction(transaction models.Transaction) (models.Transaction, error)
 }
 
 func RepositoryAuth(db *gorm.DB) *repository {
@@ -29,12 +28,6 @@ func (r *repository) Login(email string) (models.User, error) {
 	err := r.db.First(&user, "email=?", email).Error
 
 	return user, err
-}
-
-func (r *repository) CreateDataTransaction(transaction models.Transaction) (models.Transaction, error) {
-	err := r.db.Create(&transaction).Error
-
-	return transaction, err
 }
 
 func (r *repository) Getuser(ID int) (models.User, error) {
