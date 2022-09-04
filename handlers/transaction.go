@@ -36,13 +36,10 @@ func HandlerTransaction(TransactionRepository repositories.TransactionRepository
 	return &handlerTransaction{TransactionRepository}
 }
 
-func (h *handlerTransaction) FindTransactionId(w http.ResponseWriter, r *http.Request) {
+func (h *handlerTransaction) FindTransactions(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
-	userInfo := r.Context().Value("userInfo").(jwt.MapClaims)
-	userId := int(userInfo["id"].(float64))
-
-	transactions, err := h.TransactionRepository.FindTransactionId(userId)
+	transactions, err := h.TransactionRepository.FindTransactions()
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		response := dto.ErrorResult{Code: http.StatusBadRequest, Message: err.Error()}
@@ -52,6 +49,25 @@ func (h *handlerTransaction) FindTransactionId(w http.ResponseWriter, r *http.Re
 
 	w.WriteHeader(http.StatusOK)
 	response := dto.SuccessResult{Status: "success", Data: transactions}
+	json.NewEncoder(w).Encode(response)
+}
+
+func (h *handlerTransaction) FindTransactionId(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	userInfo := r.Context().Value("userInfo").(jwt.MapClaims)
+	UserID := int(userInfo["id"].(float64))
+
+	transaction, err := h.TransactionRepository.FindTransactionId(UserID)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		response := dto.ErrorResult{Code: http.StatusBadRequest, Message: err.Error()}
+		json.NewEncoder(w).Encode(response)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	response := dto.SuccessResult{Status: "success", Data: transaction}
 	json.NewEncoder(w).Encode(response)
 }
 
